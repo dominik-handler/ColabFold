@@ -88,7 +88,7 @@ def mmseqs_search_monomer(
 
     # fmt: off
     # @formatter:off
-    search_param = ["--num-iterations", "3", "--db-load-mode", str(db_load_mode), "-a", "-e", "0.1", "--max-seqs", "10000"]
+    search_param = ["--num-iterations", "3", "--db-load-mode", str(db_load_mode), "-a", "-e", "0.1", "--max-seqs", "10000", "--split-memory-limit", "130G", ]
     search_param += ["--prefilter-mode", str(prefilter_mode)]
     if s is not None:
         search_param += ["-s", "{:.1f}".format(s)]
@@ -152,11 +152,11 @@ def mmseqs_search_monomer(
                             "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,cigar",
                             "--db-output", "1",
                             "--db-load-mode", str(db_load_mode), "--threads", str(threads)])
-        run_mmseqs(mmseqs, ["unpackdb", base.joinpath(f"{template_db}"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".m8", "--threads", "1"])
+        run_mmseqs(mmseqs, ["unpackdb", base.joinpath(f"{template_db}"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".m8", "--threads", "1",])
         run_mmseqs(mmseqs, ["rmdb", base.joinpath("res_pdb")])
         run_mmseqs(mmseqs, ["rmdb", base.joinpath(f"{template_db}")])
 
-    run_mmseqs(mmseqs, ["unpackdb", base.joinpath("final.a3m"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".a3m", "--threads", "1"])
+    run_mmseqs(mmseqs, ["unpackdb", base.joinpath("final.a3m"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".a3m", "--threads", "1",])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("final.a3m")])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("uniref.a3m")])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("res")])
@@ -202,7 +202,7 @@ def mmseqs_search_pair(
 
     # fmt: off
     # @formatter:off
-    search_param = ["--num-iterations", "3", "--db-load-mode", str(db_load_mode), "-a", "-e", "0.1", "--max-seqs", "10000",]
+    search_param = ["--num-iterations", "3", "--db-load-mode", str(db_load_mode), "-a", "-e", "0.1", "--max-seqs", "10000", "--split-memory-limit", "130G", ]
     search_param += ["--prefilter-mode", str(prefilter_mode)]
     if s is not None:
         search_param += ["-s", "{:.1f}".format(s)]
@@ -216,7 +216,7 @@ def mmseqs_search_pair(
     run_mmseqs(mmseqs, ["align", base.joinpath("qdb"), dbbase.joinpath(f"{uniref_db}{dbSuffix1}"), base.joinpath("res_exp_realign_pair"), base.joinpath("res_exp_realign_pair_bt"), "--db-load-mode", str(db_load_mode), "-e", "inf", "-a", "--threads", str(threads), ],)
     run_mmseqs(mmseqs, ["pairaln", base.joinpath("qdb"), dbbase.joinpath(f"{uniref_db}"), base.joinpath("res_exp_realign_pair_bt"), base.joinpath("res_final"), "--db-load-mode", str(db_load_mode), "--pairing-mode", str(pairing_strategy), "--pairing-dummy-mode", "1", "--threads", str(threads),],)
     run_mmseqs(mmseqs, ["result2msa", base.joinpath("qdb"), dbbase.joinpath(f"{uniref_db}{dbSuffix1}"), base.joinpath("res_final"), base.joinpath("pair.a3m"), "--db-load-mode", str(db_load_mode), "--msa-format-mode", "5", "--threads", str(threads),],)
-    run_mmseqs(mmseqs, ["unpackdb", base.joinpath("pair.a3m"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".paired.a3m",],)
+    run_mmseqs(mmseqs, ["unpackdb", base.joinpath("pair.a3m"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".paired.a3m", "--threads", "1",],)
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("qdb")])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("qdb_h")])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("res")])
