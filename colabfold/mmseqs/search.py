@@ -152,11 +152,11 @@ def mmseqs_search_monomer(
                             "query,target,fident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,cigar",
                             "--db-output", "1",
                             "--db-load-mode", str(db_load_mode), "--threads", str(threads)])
-        run_mmseqs(mmseqs, ["unpackdb", base.joinpath(f"{template_db}"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".m8"])
+        run_mmseqs(mmseqs, ["unpackdb", base.joinpath(f"{template_db}"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".m8", "--threads", "1"])
         run_mmseqs(mmseqs, ["rmdb", base.joinpath("res_pdb")])
         run_mmseqs(mmseqs, ["rmdb", base.joinpath(f"{template_db}")])
 
-    run_mmseqs(mmseqs, ["unpackdb", base.joinpath("final.a3m"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".a3m"])
+    run_mmseqs(mmseqs, ["unpackdb", base.joinpath("final.a3m"), base.joinpath("."), "--unpack-name-mode", "0", "--unpack-suffix", ".a3m", "--threads", "1"])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("final.a3m")])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("uniref.a3m")])
     run_mmseqs(mmseqs, ["rmdb", base.joinpath("res")])
